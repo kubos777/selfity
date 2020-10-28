@@ -1,0 +1,10 @@
+asgiref==3.2.7
+Django==3.0.5
+django-model-utils==4.0.0
+djangorestframework==3.11.0
+Pillow==7.1.1
+pytz
+Unipath==1.1
+djongo
+sqlparse==0.2.4
+pymongo[srv]
