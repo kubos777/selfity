@@ -3,3 +3,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 selfity-env/
+selfity/__pycache__/
+static/
+staticfiles
