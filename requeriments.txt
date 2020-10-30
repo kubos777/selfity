@@ -12,3 +12,4 @@ redis
 PyJWT
 djangorestframework-simplejwt
 geopy
+django-cors-headers
