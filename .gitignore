@@ -1,8 +1,12 @@
 .vscode
 __pycache__/
-*.py[cod]
+*.pyc
+*.py[cod] 
 *$py.class
 selfity-env/
 selfity/__pycache__/
+applications/__pycache__/
+applications/api/__pycache__/
+applications/api/migrations/__pycache__/
 static/
 staticfiles
