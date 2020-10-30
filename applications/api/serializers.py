@@ -4,7 +4,6 @@ from django.contrib.auth import get_user_model
 from .models import Test, User, Image
 from django.core.files.base import ContentFile
 import base64
-import six
 import uuid
 class TestSerializer(serializers.ModelSerializer):
     class Meta:
