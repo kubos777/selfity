@@ -24,6 +24,7 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.views.generic import TemplateView
 import uuid
 import io
 from PIL import Image as PillowImage
@@ -130,7 +131,6 @@ class VerifyActiveSession(APIView):
             })
 
 class UploadImageBase64(APIView):
-    permission_classes = (AllowAny,)
     def post(self, request, format=None):        
         received = request.data       
         newImage = Image()
@@ -174,14 +174,12 @@ class DataThumbnail(ListAPIView):
 
 
 class ImagesList(ListAPIView):
-    permission_classes = (AllowAny,)
     serializer_class = ImagesSerializer
     def get_queryset(self):
         return  Image.objects.all()
 
 
 class HashtagsList(ListAPIView):
-    permission_classes = (AllowAny,)
     serializer_class = HashtagSerializer
     def get_queryset(self):
         return  Image.objects.all()
@@ -206,3 +204,22 @@ class Login(APIView):
             return response
         else :
             return Response('No')
+            
+class Documentation(TemplateView):
+    template_name = 'api/index.html'
+
+class UserCreate(APIView):
+    permission_classes = [permissions.AllowAny, ]
+    def post(self, request, format='json'):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            if user:
+                return Response({
+                    'status': True,
+                    'detail': 'Usuario creado'
+                })
+        return Response({
+                'status': False,
+                'detail': 'Error al crear usuario'
+            })

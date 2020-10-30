@@ -21,10 +21,15 @@ class CreateUserSerializer(serializers.ModelSerializer):
         return user
 
 
-class UserSerializer(serializers.ModelSerializer):   
+class UserSerializer(serializers.ModelSerializer):
+    telephone = serializers.CharField(required=True)
+    password = serializers.CharField(min_length=8)
+    def create(self, validated_data):
+        user = User.objects.create_user(validated_data['telephone'], validated_data['password'])
+        return user   
     class Meta:
         model = User
-        fields = ('id', 'telephone', )
+        fields = ('id', 'telephone','password' )
 
 class UserTelephoneSerializer(serializers.ModelSerializer):   
     class Meta:

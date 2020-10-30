@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <h1 class="display-4">Documentación API Selfity </h1>
+          <p class="lead">Proceso de selección PRESTANOMICO</p>
+          <!-- Button trigger modal -->
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+    Usuario base de datos
+  </button>
+
+      <a class="btn btn-primary" href="https://github.com/kubos777/selfity">Repositorio GitHub</a>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         <xmp>
+             user: prestanomico
+             password: 0PNYedoj2FDM2WEX
+             dbname: selfity
+            </xmp>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+        </div>
+      </div>
+      <h3 class="d-flex justify-content-center">Lista de endpoints disponibles</h3>
+      <div class="accordion" id="accordionExample">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#create" aria-expanded="true" aria-controls="create">
+                    https://kubos.mx/api/first/send-sms
+                </button>
+                </h2>
+            </div>
+            <div id="create" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body">
+                    Para comenzar a utilizar los siguientes endpoints, es necesario realizar 
+                    la creación de un usuario en el sistema: 
+                    <p class="d-flex justify-content-center">Objeto JSON prueba:</p>
+                    <xmp>
+                        {
+                            "telephone": nuevo_numero,
+                            "password   ": contraseña(más de 8 caracteeres),
+                        }
+                    </xmp>
+                    <br>
+                    <br>
+                    <p class="d-flex justify-content-center">Objeto JSON prueba:</p>
+                    <xmp>
+                        {
+                            "telephone": tu_número_celular
+                        }
+                    </xmp>
+                </div>
+            </div>
+            </div>
+        <div class="card">
+        <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#first-endpoint" aria-expanded="true" aria-controls="first-endpoint">
+                https://kubos.mx/api/first/send-sms
+            </button>
+            </h2>
+        </div>
+        <div id="first-endpoint" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+                Endpoint que recibe un número celular válido (10 dígitos), 
+                se comprobará que el mismo no tenga una sesión activa, 
+                de no tener una sesión activa, se debe enviará un SMS 
+                con un código aleatorio de 6 dígitos.
+                <br>
+                <br>
+                <p class="d-flex justify-content-center">Objeto JSON prueba:</p>
+                <xmp>
+                    {
+                        "telephone": tu_número_celular
+                    }
+                </xmp>
+            </div>
+        </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingTwo">
+            <h2 class="mb-0">
+              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#second-endpoint" aria-expanded="false" aria-controls="second-endpoint">
+                https://kubos.mx/api/second/return-bearer
+              </button>
+            </h2>
+          </div>
+          <div id="second-endpoint" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+            <div class="card-body">
+                Endpoint que recibe un número celular válido (10 dígitos) y
+                su respectivo código de 6 digitos, al ser un código válido 
+                y estar relacionado con el número celular,
+                regresará un Bearer token para la autenticación de futuras peticiones.
+                <br><br>
+                <p class="d-flex justify-content-center">Objeto JSON prueba:</p>
+                <xmp>
+                    {
+                        "telephone": tu_número_celular,
+                        "code": codigo_recibido
+                    }
+                 </xmp>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingThree">
+            <h2 class="mb-0">
+              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#third-endpoint" aria-expanded="false" aria-controls="third-endpoint">
+                https://kubos.mx/api/third/verify-session 
+                <button type="button" class="btn btn-outline-danger" disabled>Requiere autenticación por Bearer Token</button>
+              </button>
+            </h2>
+          </div>
+          <div id="third-endpoint" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+            <div class="card-body">
+                Endpoint para verificar si la sesión sigue activa.
+                <p class="d-flex justify-content-center">Objeto JSON prueba:</p>
+                <xmp>
+                    {
+                        "telephone": tu_número_celular
+                    }
+                 </xmp>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingThree">
+              <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#fourth-endpoint" aria-expanded="false" aria-controls="fourth-endpoint">
+                  https://kubos.mx/api/fourth/upload-image
+                  <button type="button" class="btn btn-outline-danger" disabled>Requiere autenticación por Bearer Token</button>
+
+                </button>
+              </h2>
+            </div>
+            <div id="fourth-endpoint" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <div class="card-body">
+                Endpoint que recibe una imagen en base64, además se reciben los siguientes campos: 
+                <ul>
+                    <li>MIME Type</li>
+                    <li>Hashtag(Utilizado como llave primaria)</li>
+                    <li>Coordenadas (latitud, longitud)</li>
+                    <li>Archivo en base 64</li>
+                </ul>
+                <br><br>
+                <p class="d-flex justify-content-center">Objeto JSON prueba:</p>
+                <xmp>
+                    {
+                        "MIMEType": formato_imagen,
+                        "hashtag": hashtag,
+                        "coords": coordenadas_lat_lng,
+                        "file": imagen_base_64   
+                    }              
+                </xmp>
+                </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#fifth-endpoint" aria-expanded="false" aria-controls="fifth-endpoint">
+                  https://kubos.mx/api/fifth/data-thumbnail/< hashtag >
+                  <button type="button" class="btn btn-outline-danger" disabled>Requiere autenticación por Bearer Token</button>
+
+                </button>
+              </h2>
+            </div>
+            <div id="fifth-endpoint" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <div class="card-body">
+                Endpoint que recibe el ID(hashtag) del archivo(imagen) y regresará
+                una miniatura de la misma (no la original), la fecha de creación y el hashtag.
+                <xmp>
+                    Petición GET: https:://kubos.mx/api/fifth/data-thumbnail/hashtag
+                </xmp>
+            </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#sixth-endpoint" aria-expanded="false" aria-controls="sixth-endpoint">
+                  https://kubos.mx/api/sixth/images/list
+                  <button type="button" class="btn btn-outline-danger" disabled>Requiere autenticación por Bearer Token</button>
+
+                </button>
+              </h2>
+            </div>
+            <div id="sixth-endpoint" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <div class="card-body">
+                Endpoint que regresa una lista de todas las imagenes almacenadas.
+                <xmp>
+                    Petición GET: https://kubos.mx/api/sixth/images/list
+                </xmp>
+            </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#seventh-endpoint" aria-expanded="false" aria-controls="seventh-endpoint">
+                  https://kubos.mx/api/seventh/hastags/list
+                  <button type="button" class="btn btn-outline-danger" disabled>Requiere autenticación por Bearer Token</button>
+
+                </button>
+              </h2>
+            </div>
+            <div id="seventh-endpoint" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <div class="card-body">
+                 Endpoint que regresa una lista de hashtags.
+                 <xmp>
+                    Petición GET: https://kubos.mx/api/seventh/hastags/list
+                </xmp>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="btn btn-link btn-block text-left collapsed">
+            <!-- Place this tag where you want the button to render. -->
+    <a class="github-button" href="https://github.com/kubos777" data-color-scheme="no-preference: dark; light: dark; dark: light;" data-size="large" aria-label="Follow @kubos777 on GitHub">Follow @kubos777</a>
+  
+      </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+</html>
