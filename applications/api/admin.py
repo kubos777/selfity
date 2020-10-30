@@ -8,7 +8,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from .forms import UserAdminCreationForm, UserAdminChangeForm
 
-from .models import Test
+from .models import Test,Image
 
 class UserAdmin(BaseUserAdmin):
 
@@ -39,3 +39,4 @@ admin.site.register(User, UserAdmin)
 
 admin.site.unregister(Group)
 admin.site.register(Test)
+admin.site.register(Image)

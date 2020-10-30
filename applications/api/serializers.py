@@ -1,8 +1,11 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
-from .models import Test, User
-
+from .models import Test, User, Image
+from django.core.files.base import ContentFile
+import base64
+import six
+import uuid
 class TestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Test
@@ -28,3 +31,18 @@ class UserTelephoneSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('telephone', )
+
+class ImageSerializer(serializers.Serializer):
+    thumbnail = serializers.ImageField()
+    created_at = serializers.DateTimeField()
+    hashtag = serializers.CharField()
+    coords = serializers.CharField()
+
+class ImagesSerializer(serializers.Serializer):
+    file = serializers.ImageField()
+
+class HashtagSerializer(serializers.Serializer):
+    hashtag = serializers.CharField()
+
+
+

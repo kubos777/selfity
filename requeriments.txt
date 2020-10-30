@@ -11,3 +11,4 @@ pymongo[srv]
 redis
 PyJWT
 djangorestframework-simplejwt
+geopy

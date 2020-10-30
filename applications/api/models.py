@@ -59,3 +59,27 @@ class User(AbstractBaseUser):
     @property
     def is_active(self):
         return self.active
+
+
+class Image(TimeStampedModel):
+    MIMEType = models.CharField(
+        'Tipo de imagen',
+        max_length= 20,
+        null= True
+    )
+    hashtag = models.CharField(
+        'Nombre',
+        max_length= 20,
+        unique= True
+    )
+    coords = models.CharField(
+        'Coordenadas',
+        max_length= 500
+    )
+    file = models.ImageField(upload_to='images')
+    thumbnail = models.ImageField(upload_to='thumbnails',null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.hashtag

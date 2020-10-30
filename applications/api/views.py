@@ -1,25 +1,32 @@
-from django.shortcuts import render
-from rest_framework import permissions,status, exceptions
-from rest_framework.generics import ListAPIView
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
-from django.views.decorators.csrf import ensure_csrf_cookie
-from rest_framework.authtoken.serializers import AuthTokenSerializer
-from .models import Test, User
-from .serializers import TestSerializer, UserSerializer, UserTelephoneSerializer
-from .utils import generate_access_token
-from django.contrib.auth import authenticate
-
-from django.shortcuts import get_object_or_404
-
-from .sms_api import get_code
+from .models import Test, User, Image
 from .redis_cache import create_tmp_code, set_session, session_exists, code_exists
-
-
+from .serializers import (
+    TestSerializer, 
+    UserSerializer, 
+    UserTelephoneSerializer, 
+    ImageSerializer, 
+    ImagesSerializer,
+    HashtagSerializer,
+    )
+from .sms_api import get_code
+from .utils import generate_access_token, get_address
+from base64 import b64decode
+from django.contrib.auth import authenticate
 from django.contrib.auth import login
-
+from django.core.files.base import ContentFile
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render
+from django.views.decorators.csrf import ensure_csrf_cookie
+from rest_framework import permissions,status, exceptions
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from rest_framework.views import APIView
+import uuid
+import io
+from PIL import Image as PillowImage
 
 # Create your views here.
 
@@ -121,6 +128,63 @@ class VerifyActiveSession(APIView):
                 'status': False,
                 'detail': 'Teléfono no ingresado'
             })
+
+class UploadImageBase64(APIView):
+    permission_classes = (AllowAny,)
+    def post(self, request, format=None):        
+        received = request.data       
+        newImage = Image()
+        newImage.hashtag = received['hashtag']
+        newImage.coords = received['coords']
+        img_received = received['file']
+        img_received_ext = img_received.split(';')
+        img_received_ext = img_received_ext[0].split(':')
+        img_received_ext = img_received_ext[1].split('/')
+        img_received_ext = img_received_ext[1]
+        newImage.MIMEType = img_received_ext
+        clear_image_data = img_received.replace('data:image/'+img_received_ext+';base64,','')
+        image_data = b64decode(clear_image_data)
+        image_name = str(uuid.uuid4()) + '.' + str(img_received_ext)
+        newImage.file = ContentFile(image_data, image_name )
+        image = PillowImage.open(newImage.file)
+        image_io = io.BytesIO()
+        image  = image.resize((90,90), PillowImage.ANTIALIAS)
+        image.save(image_io, format=img_received_ext)
+        newImage.thumbnail = ContentFile(image_io.getvalue(),image_name)
+        print(str(uuid.uuid4()) + '.' + str(img_received_ext))
+        try:
+            newImage.save()
+            return Response({
+                "status": True,
+                "detail": 'Imagen guardada correctamente'
+            })
+        except:
+            return Response({
+                "status": True,
+                "detail": 'Imagen no guardada'
+            })
+
+
+class DataThumbnail(ListAPIView):
+    permission_classes = (AllowAny,)
+    serializer_class = ImageSerializer
+    def get_queryset(self):
+        hashtag = self.kwargs['hashtag']
+        return  Image.objects.filter(hashtag=hashtag)
+
+
+class ImagesList(ListAPIView):
+    permission_classes = (AllowAny,)
+    serializer_class = ImagesSerializer
+    def get_queryset(self):
+        return  Image.objects.all()
+
+
+class HashtagsList(ListAPIView):
+    permission_classes = (AllowAny,)
+    serializer_class = HashtagSerializer
+    def get_queryset(self):
+        return  Image.objects.all()
 
 class Login(APIView):
     permission_classes = [permissions.AllowAny, ]
