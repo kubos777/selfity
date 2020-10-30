@@ -27,3 +27,8 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = BASE_DIR.child('static')
 STATICFILES_DIRS = [BASE_DIR.child('staticfiles')]
+
+MEDIA_ROOT = BASE_DIR.child('media')
+MEDIA_URL = '/media/'
+FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0o755
+FILE_UPLOAD_PERMISSIONS = 0o644
