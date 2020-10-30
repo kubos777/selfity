@@ -5,5 +5,9 @@ app_name = 'api_app'
 
 urlpatterns = [
     path('api/test', views.TestList.as_view()),
-    path('api/validate_telephone', views.ValidateTelephone.as_view()),
+    path('api/first/send-sms', views.FirstSendSMS.as_view()),
+    path('api/second/return-bearer', views.SecondReturnBearer.as_view()),
+    path('api/third/verify-session', views.VerifyActiveSession.as_view()),
+
+    path('api/login',views.Login.as_view()),
 ]
